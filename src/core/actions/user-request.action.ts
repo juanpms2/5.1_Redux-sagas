@@ -1,41 +1,19 @@
 import { UserEntity, ErrorEntity } from "model";
-import { actionsEnums } from "../actionsEnums";
-import { getUser } from "common";
-import { trackPromise } from "react-promise-tracker";
+import { actionsEnums, BaseAction } from "../actionsEnums";
 
-export const userRequest = (user: UserEntity) => ({
+export const userRequestAction = (idLogin: string): BaseAction => ({
+	type: actionsEnums.USER_REQUEST,
+	payload: idLogin,
+});
+
+export const userRequestCompletedAction = (user: UserEntity): BaseAction => ({
 	type: actionsEnums.USER_REQUEST_COMPLETED,
-	payload: user
+	payload: user,
 });
 
-export const errorRequestUser = (errorEntity: ErrorEntity) => ({
+export const errorRequestUserAction = (
+	errorEntity: ErrorEntity
+): BaseAction => ({
 	type: actionsEnums.ERROR_REQUEST,
-	payload: errorEntity
+	payload: errorEntity,
 });
-
-export const loadUser = (idLogin: string) => (dispatcher) => {
-	const promise = getUser(idLogin);
-	const errorEntity: ErrorEntity = {
-		organization: "",
-		booleanError: false,
-		txtError: "",
-		nameLogin: idLogin
-	};
-	trackPromise(
-		promise
-			.then((user) => {
-				errorEntity.organization = user.company;
-				dispatcher(userRequest(user));
-				dispatcher(errorRequestUser(errorEntity));
-				return user;
-			})
-			.catch((error) => {
-				errorEntity.booleanError = true;
-				errorEntity.txtError = error;
-				dispatcher(errorRequestUser(errorEntity));
-				return error;
-			})
-	);
-
-	return promise;
-};

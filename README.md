@@ -1,4 +1,4 @@
-# 5 Redux sagas Lab. GitHub Searcher
+# 5.1 Redux sagas Lab. GitHub Searcher
 
 El ejercicio consiste en extender el ejemplo de mostrar los miembros de una organización que pertenece a Github.
 

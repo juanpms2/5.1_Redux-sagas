@@ -1,4 +1,5 @@
 import { MemberEntity, createDefaultMemberEntity, UserEntity } from "model";
+import { trackPromise } from "react-promise-tracker";
 
 export const getAllMembers = (
 	organizationName: string
@@ -11,11 +12,11 @@ export const getAllMembers = (
 		.then((data) => resolveMembers(data, organizationName));
 };
 
-export const getUser = (login: string): Promise<UserEntity> => {
-	const gitHubUserUrl: string = `https://api.github.com/users/${login}`;
+export const getUser = (idLogin: string): Promise<UserEntity> => {
+	const gitHubUserUrl: string = `https://api.github.com/users/${idLogin}`;
 
 	return fetch(gitHubUserUrl)
-		.then((response) => checkStatus(response, login))
+		.then((response) => checkStatus(response, idLogin))
 		.then((response) => parseJSON(response))
 		.then((data) => resolveUser(data));
 };

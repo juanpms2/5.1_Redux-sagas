@@ -12,5 +12,5 @@ export interface GlobalState {
 export const globalReducers = combineReducers<GlobalState>({
 	membersReducer,
 	userReducer,
-	errorReducer
+	errorReducer,
 });

@@ -1,9 +1,10 @@
 import * as React from "react";
 import { MembersCollectionComponent } from "./members-collection.component";
 import { useParams, useHistory } from "react-router-dom";
-import { linkRoutes, GlobalState, loadMembers } from "core";
+import { linkRoutes, GlobalState, membersRequestAction } from "core";
 import { connect } from "react-redux";
 import { MemberEntity } from "model";
+import { Dispatch } from "redux";
 
 interface Props {
 	members: MemberEntity[];
@@ -30,7 +31,6 @@ const InnerMembersCollectionContainer: React.FunctionComponent<Props> = (
 		setInit(0);
 		setFin(increment);
 		setPage(1);
-		// members.slice(0, increment);
 	};
 
 	const handleChange = (event, value) => {
@@ -50,24 +50,20 @@ const InnerMembersCollectionContainer: React.FunctionComponent<Props> = (
 			totalMembers={totalMembers}
 			page={page}
 			handleChange={handleChange}
-			loadMember={loadMember}
+			loadMembers={loadMember}
 		/>
 	);
 };
 
-const mapStateToProps = (globalState: GlobalState) => {
-	return {
-		members: globalState.membersReducer
-	};
-};
+const mapStateToProps = (globalState: GlobalState) => ({
+	members: globalState.membersReducer,
+});
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		loadMembers: (organization) => {
-			dispatch(loadMembers(organization));
-		}
-	};
-};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+	loadMembers: (organization) => {
+		dispatch(membersRequestAction(organization));
+	},
+});
 
 export const MembersCollectionContainer = connect(
 	mapStateToProps,

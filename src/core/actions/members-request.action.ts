@@ -1,41 +1,23 @@
 import { MemberEntity, ErrorEntity } from "model";
-import { actionsEnums } from "../actionsEnums";
-import { getAllMembers } from "common";
-import { trackPromise } from "react-promise-tracker";
+import { actionsEnums, BaseAction } from "../actionsEnums";
 
-export const membersRequest = (members: MemberEntity[]) => ({
-	type: actionsEnums.MEMBERS_REQUEST,
-	payload: members
-});
-
-export const errorRequestCompany = (errorEntity: ErrorEntity) => ({
-	type: actionsEnums.ERROR_REQUEST,
-	payload: errorEntity
-});
-
-export const loadMembers = (organization) => (dispatcher) => {
-	const promise = getAllMembers(organization);
-	const errorEntity: ErrorEntity = {
-		organization,
-		booleanError: false,
-		txtError: "",
-		nameLogin: ""
+export const membersRequestAction = (organization: string): BaseAction => {
+	return {
+		type: actionsEnums.MEMBERS_REQUEST,
+		payload: organization,
 	};
-
-	trackPromise(
-		promise
-			.then((members) => {
-				dispatcher(membersRequest(members));
-				dispatcher(errorRequestCompany(errorEntity));
-				return members;
-			})
-			.catch((error) => {
-				errorEntity.booleanError = true;
-				errorEntity.txtError = error;
-				dispatcher(errorRequestCompany(errorEntity));
-				return errorEntity;
-			})
-	);
-
-	return promise;
 };
+
+export const membersRequestCompletedAction = (
+	members: MemberEntity[]
+): BaseAction => ({
+	type: actionsEnums.MEMBERS_REQUEST_COMPLETED,
+	payload: members,
+});
+
+export const errorRequestCompanyAction = (
+	errorEntity: ErrorEntity
+): BaseAction => ({
+	type: actionsEnums.ERROR_REQUEST,
+	payload: errorEntity,
+});

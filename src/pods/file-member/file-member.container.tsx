@@ -1,9 +1,10 @@
 import * as React from "react";
 import { FileCardMemberComponent } from "./file-member.component";
 import { useParams } from "react-router-dom";
-import { GlobalState, loadUser } from "core";
+import { GlobalState, userRequestAction } from "core";
 import { UserEntity } from "model";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
 interface Props {
 	user: UserEntity;
@@ -25,15 +26,15 @@ const InnerFileCardMemberContainer: React.FunctionComponent<Props> = (
 
 const mapStateToProps = (globalState: GlobalState) => {
 	return {
-		user: globalState.userReducer
+		user: globalState.userReducer,
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
 	return {
-		loadUser: (login) => {
-			dispatch(loadUser(login));
-		}
+		loadUser: (idLogin) => {
+			dispatch(userRequestAction(idLogin));
+		},
 	};
 };
 
