@@ -1,12 +1,10 @@
 import { MemberEntity, ErrorEntity } from "model";
 import { actionsEnums, BaseAction } from "../actionsEnums";
 
-export const membersRequestAction = (organization: string): BaseAction => {
-	return {
-		type: actionsEnums.MEMBERS_REQUEST,
-		payload: organization,
-	};
-};
+export const membersRequestAction = (organization: string): BaseAction => ({
+	type: actionsEnums.MEMBERS_REQUEST,
+	payload: organization,
+});
 
 export const membersRequestCompletedAction = (
 	members: MemberEntity[]

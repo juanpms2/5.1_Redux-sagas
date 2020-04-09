@@ -2,7 +2,7 @@
 
 El ejercicio consiste en extender el ejemplo de mostrar los miembros de una organización que pertenece a Github.
 
-Partimos del [ejercicio de React]("https://github.com/juanpms2/4_React_GitHub_Searcher). En este caso se implementará Redux sagas para conectar los datos con los componentes.
+Partimos del [ejercicio de Redux Thunk]("https://github.com/juanpms2/5_Redux-thunk). En este caso se implementará Redux sagas para conectar los datos con los componentes.
 
 Se amplia con lo siguiente:
 

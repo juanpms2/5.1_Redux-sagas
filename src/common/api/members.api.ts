@@ -1,5 +1,4 @@
 import { MemberEntity, createDefaultMemberEntity, UserEntity } from "model";
-import { trackPromise } from "react-promise-tracker";
 
 export const getAllMembers = (
 	organizationName: string
